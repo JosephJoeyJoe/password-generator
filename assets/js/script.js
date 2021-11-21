@@ -42,9 +42,25 @@ function generatePassword() {
         selections = selections.concat(numericCharacters);
     }
 
-    getSpecialCharacters = confirm(specialCharacters);
+    getSpecialCharacters = confirm("Do you want your password to include special characters?");
     if (getSpecialCharacters) {
         selections = selections.concat(specialCharacters);
     }
+
+    passwordLength = window.prompt ("Password Length: Please enter a character length between 8 and 128.");
+
+    if (passwordLength >= 8 && passwordLength <= 128) {
+        window.confirm("Your password is " + passwordLength + " characters long.");
+    };
+
+    
+    var password = [];
+    for (var i = 0; i < passwordLength; i++) {
+        var generation = selections[Math.floor(Math.random() * selections.length)];
+        password = password.concat(generation);
+    }
+
+    return (password.join(""));
+
 
 };
