@@ -13,7 +13,7 @@ function writePassword() {
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 
-// function to generate password
+// function to select password criteria
 
 function generatePassword() {
     var lowercaseLetters = ["a", "b", "c", "d", "e", "f", "g", "h", "f", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
@@ -25,11 +25,13 @@ function generatePassword() {
  getSelections();
 
  function getSelections() {
+
+    
      getLowercase = confirm ("Do you want your password to include lowercase letters?");
      if (getLowercase) {
          selections = selections.concat(lowercaseLetters);
      }
- }
+ 
 
     getUppercase = confirm ("Do you want your password to include uppercase letters?");
     if (getUppercase) {
@@ -47,20 +49,42 @@ function generatePassword() {
         selections = selections.concat(specialCharacters);
     }
 
-    passwordLength = window.prompt ("Password Length: Please enter a character length between 8 and 128.");
-
-    if (passwordLength >= 8 && passwordLength <= 128) {
-        window.confirm("Your password is " + passwordLength + " characters long.");
-    };
-
-    
-    var password = [];
-    for (var i = 0; i < passwordLength; i++) {
-        var generation = selections[Math.floor(Math.random() * selections.length)];
-        password = password.concat(generation);
+    if (!getLowercase && !getUppercase && !getNumbers && !getSpecialCharacters) {
+        window.alert("Password must contain at least one character type.");
+        getSelections();
     }
 
-    return (password.join(""));
+    passwordLength = window.prompt ("Password Length: Please enter a character length between 8 and 128.");
+    if (passwordLength >= 8 && passwordLength <= 128) {
+        window.confirm("Your password is " + passwordLength + " characters long.");
+        return;
+        
+    }
+
+    if (passwordLength < 8) {
+        window.alert("Password must be at least 8 characters.");
+        getSelections();
+    }
+    else if (passwordLength > 128) {
+        window.alert("Password cannot contain more than 128 characters.")
+        getSelections();
+    }
+    else {
+        window.alert("Please enter a character length between 8 and 128.")
+        getSelections();
+    }
+
+   };
+
+
+    // function to generate random password
+    var printPassword = [];
+    for (var i = 0; i < passwordLength; i++) {
+        var generation = selections[Math.floor(Math.random() * selections.length)];
+        printPassword = printPassword.concat(generation);
+    }
+
+    return (printPassword.join(""));
 
 
 };
